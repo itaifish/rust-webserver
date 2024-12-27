@@ -1,6 +1,6 @@
 use serde::{Deserialize, Deserializer};
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[derive(Deserialize)]
 pub struct EnvironmentVariables {
     pub port: u16,

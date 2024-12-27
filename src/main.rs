@@ -4,7 +4,10 @@ mod webserver;
 mod startup;
 mod models;
 
-fn main() {
-    load_environments();
-    webserver::start::main();
+#[tokio::main]
+async fn main() {
+    let envs = load_environments();
+    webserver::start::main(&envs)
+        .await
+        .unwrap();
 }

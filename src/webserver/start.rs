@@ -1,18 +1,19 @@
 
 use tokio::net::TcpListener;
-use crate::webserver::router;
+use log::{error, info};
+use crate::webserver::{listener, router};
 
 #[tokio::main]
 pub async fn main() {
+    colog::init();
     let router = router::init_router();
-    let listener = init_listener().await;
-    axum::serve(listener, router).await.unwrap();
+    let listener = listener::init_listener().await;
+    info!("Server started on port 3000 🚀 ");
+    axum::serve(listener, router).await.unwrap_or({
+        error!("Server encountered an unexpected error");
+    });
 }
 
 
-async fn init_listener() -> TcpListener {
-    TcpListener::bind("0.0.0.0:3000")
-    .await
-    .unwrap()
-}
+
 
